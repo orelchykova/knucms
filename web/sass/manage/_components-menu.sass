@@ -1,0 +1,56 @@
+.components-menu
+  position: fixed
+  bottom: -120px
+  left: 0
+  right: 0
+  height: 120px
+  background: #ddd
+  box-shadow: 0 -1px 2px 1px rgba(135, 131, 131, 0.87)
+  text-align: center
+  transition: all ease 0.3s
+  &.open
+    bottom: 0
+    .slide-btn
+      i
+        transform: rotate(180deg)
+
+  .components-menu__container
+    position: relative
+    display: inline-block
+    margin: auto
+    padding-top: 10px
+  .slide-btn
+    position: absolute
+    top: -24px
+    left: 50%
+    margin-left: -20px
+    background: #ddd
+    box-shadow: 0 -1px 2px 0px rgba(135, 131, 131, 0.87)
+    border-radius: 2px
+    width: 40px
+    height: 24px
+    cursor: pointer
+  .component-item
+    width: 100px
+    height: 100px
+    box-sizing: border-box
+    background: #F5F5F5
+    border-radius: 2px
+    padding-top: 25px
+    cursor: pointer
+    display: inline-block
+    &.hide
+      display: none
+    i
+      display: block
+  .component-subitems
+    display: none
+    &.show
+      //display: block
+      display: inline-block
+    .up-category
+      position: absolute
+      left: -40px
+      top: 50%
+      cursor: pointer
+      margin-top: -11px

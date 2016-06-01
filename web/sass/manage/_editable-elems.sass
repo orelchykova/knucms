@@ -1,0 +1,23 @@
+.separator
+  &.active
+    box-shadow: 0px 0px 2px 1px #75C5FF
+    height: 14px
+  &.dragover
+    box-shadow: 0px 0px 2px 3px #03A9F4
+
+.edit-icon, .done-icon
+  display: inline-block
+  cursor: pointer
+  margin-left: 16px
+
+.to-edit[contenteditable="true"]
+  outline: none
+  box-shadow: 0px 0 3px 2px #2196F3
+  padding: 2px 12px 6px 6px
+
+[data-component-type]
+  &[draggable="true"]
+    cursor: -webkit-grab
+    cursor: -moz-grab
+    cursor: -o-grab
+    cursor: grab

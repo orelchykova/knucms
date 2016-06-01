@@ -1,0 +1,33 @@
+.dropdown-icon
+  position: absolute
+  top: 14px
+  right: 6px
+  color: #9d9d9d
+.main-menu-item
+  a
+    display: inline-block !important
+    vertical-align: middle
+    &.with-submenu
+      padding-right: 30px
+.sub-menu
+  position: absolute
+  list-style: none
+  background: #222222
+  padding: 0
+  display: none
+  &.open
+    display: block
+  li
+    padding: 0
+    a
+      color: #9d9d9d
+      text-decoration: none
+      padding: 4px 32px 4px 16px
+      width: 100%
+      min-width: 100px
+      &:first-child
+        padding-top: 8px
+      &:last-child
+        padding-bottom: 16px
+      &:hover
+        color: #fff
