@@ -29,10 +29,9 @@ AppAsset::register($this);
     <?= $this->render('//blocks/site-nav');?>
 
     <div class="container">
-        <?= Breadcrumbs::widget([
-            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-        ]) ?>
+        <div class="content-wrapper">
         <?= $content ?>
+        </div>
     </div>
 </div>
 

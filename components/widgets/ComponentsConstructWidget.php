@@ -38,10 +38,16 @@ class ComponentsConstructWidget extends Widget
     protected function renderComponents($components)
     {
         foreach ($components as $component) {
+            $this->renderSeparartor();
             switch ($component) {
                 case (isset($component->component_title_id)):
-                    $this->renderSeparartor();
                     $this->renderTitle($component);
+                    break;
+                case (isset($component->component_subtitle_id)):
+                    $this->renderSubTitle($component);
+                    break;
+                case (isset($component->component_text_id)):
+                    $this->renderText($component);
                     break;
             }
         }
@@ -56,6 +62,28 @@ class ComponentsConstructWidget extends Widget
         ]);
 
         echo $titleHtml;
+    }
+
+    protected function renderSubTitle($title)
+    {
+        $titleHtml = Html::tag('h4', $title->content, [
+            'data-component-type' => 'subtitle',
+            'id' => 'subtitle_' . $title->component_subtitle_id,
+            'editable-text' => ''
+        ]);
+
+        echo $titleHtml;
+    }
+
+    protected function renderText($text)
+    {
+        $html = Html::tag('div', $text->content, [
+            'data-component-type' => 'text',
+            'id' => 'text_' . $text->component_text_id,
+            'editable-text-redactor' => ''
+        ]);
+
+        echo $html;
     }
 
     protected function renderSeparartor()

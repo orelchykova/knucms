@@ -27,4 +27,4 @@ phpunit.phar
 /phpunit.xml
 
 #sass cache
-site/web/.sass-cache
+/web/.sass-cache

@@ -21,7 +21,14 @@
                 <div class="component-item"
                      component-item
                      icon="text_fields"
-                     text="Подзаголовок"></div>
+                     text="Подзаголовок"
+                     data-type="subtitle"></div>
+                <div class="component-item"
+                     component-item
+                     icon="reorder"
+                     text="Текст"
+                     data-type="text"></div>
+
             </div>
 
 

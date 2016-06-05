@@ -5,10 +5,17 @@
   &.dragover
     box-shadow: 0px 0px 2px 3px #03A9F4
 
+.editable-container
+  position: relative
+  display: inline-block
+.edit-icons
+  position: absolute
+  right: -50px
+  top: -3px
 .edit-icon, .done-icon
   display: inline-block
   cursor: pointer
-  margin-left: 16px
+  vertical-align: middle
 
 .to-edit[contenteditable="true"]
   outline: none
@@ -21,3 +28,19 @@
     cursor: -moz-grab
     cursor: -o-grab
     cursor: grab
+
+.editor-wrapper
+  max-height: 0
+  overflow: hidden
+  transition: all ease 0.4s
+  &.open
+    max-height: 1000px
+    margin-top: 16px
+  .ta-text
+    &.ta-editor
+      padding: 10px
+      background-color: #fff
+      border: 1px solid #eee
+      height: initial
+  [contenteditable="true"]
+    outline: none

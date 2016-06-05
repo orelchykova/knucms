@@ -16,9 +16,23 @@ class SitePage extends ActiveRecord {
         return $this->hasMany(ComponentTitle::className(), ['site_page_id' => 'site_page_id']);
     }
 
+    public function getSubTitleComponents()
+    {
+        return $this->hasMany(ComponentSubTitle::className(), ['site_page_id' => 'site_page_id']);
+    }
+
+    public function getTextComponents()
+    {
+        return $this->hasMany(ComponentText::className(), ['site_page_id' => 'site_page_id']);
+    }
+
     public function getAllComponents()
     {
-        $allComponents = $this->getTitleComponents();
+        $titles = $this->getTitleComponents()->all();
+        $subTitles = $this->getSubTitleComponents()->all();
+        $texts = $this->getTextComponents()->all();
+
+        $allComponents = array_merge($titles, $subTitles, $texts);
         return $allComponents;
     }
 

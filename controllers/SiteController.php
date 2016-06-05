@@ -135,13 +135,12 @@ class SiteController extends Controller
 
 
 
-    public function actionAqaq()
-    {
-        return $this->render('aqaq');
-    }
+
 
     public function actionKoko()
     {
         return $this->render('koko');
     }
+
+
 }

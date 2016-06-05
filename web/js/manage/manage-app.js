@@ -2,7 +2,8 @@ var manageApp = angular.module('manageApp', [
     'manageServices',
     'manageControllers',
     'manageDirectives',
-    'ngRoute'
+    'ngRoute',
+    'textAngular'
 ]);
 
 manageApp.config(['$routeProvider',

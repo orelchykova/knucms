@@ -1,4 +1,4 @@
-var manageControllers  = angular.module('manageControllers', []);
+    var manageControllers  = angular.module('manageControllers', []);
 
 manageControllers.controller('constructorCtrl',
     [

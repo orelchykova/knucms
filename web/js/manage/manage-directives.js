@@ -49,10 +49,14 @@ manageDirectives.directive('editableText', [
             transclude: true,
             scope: true,
             template: '<div class="editable-wrapper">' +
-                        '<span class="to-edit" ng-transclude ng-keydown="change()"></span>' +
-                        '<i class="material-icons edit-icon" ng-click="edit()" ng-if="!compEditing">edit</i>' +
-                        '<i class="material-icons done-icon" ng-click="delete()" ng-if="compEditing ">delete</i>' +
-                        '<i class="material-icons done-icon" ng-click="done()" ng-if="compEditing ">done</i>' +
+                        '<div class="editable-container">' +
+                            '<span class="to-edit" ng-transclude ng-keydown="change()"></span>' +
+                            '<div class="edit-icons">' +
+                            '<i class="material-icons edit-icon" ng-click="edit()" ng-if="!compEditing">edit</i>' +
+                            '<i class="material-icons done-icon" ng-click="delete()" ng-if="compEditing ">delete</i>' +
+                            '<i class="material-icons done-icon" ng-click="done()" ng-if="compEditing ">done</i>' +
+                            '</div>' +
+                        '</div>' +
                       '</div>',
             link: function (scope, element, attrs) {
                 scope.compEditing = false;
@@ -94,8 +98,7 @@ manageDirectives.directive('editableText', [
                     var toEditElem = element.find('.to-edit'),
                         content,
                         type,
-                        id,
-                        updating;
+                        id;
 
                     if (element.find('.to-edit').hasClass('edited')) {
                         type = element.data('componentType');
@@ -104,6 +107,7 @@ manageDirectives.directive('editableText', [
                                     .find('.to-edit')
                                     .children()
                                     .html();
+                        content = content ? content : element.find('.to-edit').html();
                         content = formatText(content);
 
                         Components.update.query(
@@ -119,6 +123,83 @@ manageDirectives.directive('editableText', [
             }
         };
 }]);
+
+manageDirectives.directive('editableTextRedactor', [
+    'Components',
+    function (Components) {
+        return {
+            restrict: 'A',
+            transclude: true,
+            scope: true,
+            template: '<div class="editable-wrapper">' +
+                            '<div class="editable-container">' +
+                                '<div class="to-edit" ng-transclude></div>' +
+                                '<div class="edit-icons">' +
+                                    '<i class="material-icons edit-icon" ng-click="edit()" ng-if="!compEditing">edit</i>' +
+                                    '<i class="material-icons done-icon" ng-click="delete()" ng-if="compEditing ">delete</i>' +
+                                    '<i class="material-icons done-icon" ng-click="done()" ng-if="compEditing ">done</i>' +
+                                '</div>' +
+                            '</div>' +
+                            '<div class="editor-wrapper" ng-class="{\'open\' : compEditing}">' +
+                                '<div text-angular ng-model="redactorContent"></div>' +
+                            '</div>' +
+                        '</div>',
+            link: function (scope, element, attrs) {
+                var startContent = element.find('.to-edit')
+                                    .html();
+
+                scope.compEditing = false;
+                scope.redactorContent = startContent;
+
+                scope.edit = function() {
+                    //var toEditElem = element.find('.to-edit');
+                    scope.compEditing = true;
+                };
+
+                scope.delete = function() {
+                    var delItem = function() {
+                        var type = element.data('componentType'),
+                            id = element.attr('id').split(type + '_')[1],
+                            deleting;
+
+                        deleting = Components.delete.query({
+                            id: id,
+                            type: type
+                        })
+                            .$promise
+                            .then(function(result) {
+                                element.next().remove();
+                                element.remove();
+                                recalcPositions(Components);
+                            });
+                    };
+                    openPrompt('Вы уверены что хотите удалить компонент?', delItem);
+                };
+
+                scope.done = function() {
+                    var toEditElem = element.find('.to-edit'),
+                        content,
+                        type,
+                        id;
+
+
+                    type = element.data('componentType');
+                    id = element.attr('id').split(type + '_')[1];
+                    content = scope.redactorContent;
+
+                    element.find('.to-edit').html(content);
+                    Components.update.query(
+                        {
+                            id: id,
+                            type: type,
+                            content: content
+                        });
+
+                    scope.compEditing  = false;
+                }
+            }
+        };
+    }]);
 
 manageDirectives.directive('slideBtn', [
     function () {
@@ -216,6 +297,14 @@ manageDirectives.directive('separatorItem', [ 'Components', '$compile',
                         return '<h1 editable-text data-component-type="title" id="title_' + id + '" >Новый заголовок</h1>';
                     };
 
+                    createSubTitle = function(id) {
+                        return '<h4 editable-text data-component-type="subtitle" id="subtitle_' + id + '" >Новый подзаголовок</h4>';
+                    };
+
+                    createText = function(id) {
+                        return '<p editable-text-redactor data-component-type="text" id="text_' + id + '" >Новый текст</p>';
+                    };
+
                     separator = $(event.target);
 
                     switch (type) {
@@ -225,11 +314,24 @@ manageDirectives.directive('separatorItem', [ 'Components', '$compile',
                                 content: 'Новый заголовок'
                             };
                             break;
+                        case 'subtitle':
+                            creatingFunc = createSubTitle;
+                            params = {
+                                content: 'Новый подзаголовок'
+                            };
+                            break;
+                        case 'text':
+                            creatingFunc = createText;
+                            params = {
+                                content: 'Новый текст'
+                            };
+                            break;
                         default:
                             break;
                     }
 
                     params['type'] = type;
+                    params['site_page_id'] = pageId;
 
                     Components.create.query(params)
                         .$promise

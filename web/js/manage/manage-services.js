@@ -71,13 +71,14 @@ manageServices.factory('Components', [
                 }),
             create: $resource(
                 'manage/create-component',
-                {site_page_id: pageId},
+                {},
                 {
                     query: {
                         method: 'GET',
                         isArray: true,
                         params: {
-                            'type': '@type'
+                            'type': '@type',
+                            'site_page_id': '@site_page_id'
                         }
                     }
                 }),

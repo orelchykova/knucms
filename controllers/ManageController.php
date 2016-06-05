@@ -2,7 +2,9 @@
 
 namespace app\controllers;
 
+use app\models\ComponentSubTitle;
 use app\models\ComponentTitle;
+use app\models\ComponentText;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -153,6 +155,11 @@ class ManageController extends Controller
         $view = $page->view;
         $route = $url->route;
 
+        //delete page components
+        foreach ($page->allComponents as $component) {
+            $component->delete();
+        }
+
         $menuItem->delete();
         $page->delete();
         $url->delete();
@@ -174,6 +181,24 @@ class ManageController extends Controller
         file_put_contents(dirname(__FILE__) . '/SiteController.php', $ctrlCode);
     }
 
+    protected function getComponentByType($type, $id)
+    {
+        switch ($type) {
+            case 'title':
+                $component = ComponentTitle::findOne($id);
+                break;
+            case 'subtitle':
+                $component = ComponentSubTitle::findOne($id);
+                break;
+            case 'text':
+                $component = ComponentText::findOne($id);
+                break;
+            default:
+                exit();
+        }
+
+        return $component;
+    }
 
     public function actionUpdateComponent()
     {
@@ -189,13 +214,7 @@ class ManageController extends Controller
         unset($params['id']);
         unset($params['type']);
 
-        switch ($type) {
-            case 'title':
-                $component = ComponentTitle::findOne($id);
-                break;
-            default:
-                exit();
-        }
+        $component = $this->getComponentByType($type, $id);
 
         foreach ($params as $paramName=>$paramVal) {
             if (isset($component->$paramName)) {
@@ -221,6 +240,14 @@ class ManageController extends Controller
             case 'title':
                 $component = new ComponentTitle();
                 $idType = 'component_title_id';
+                break;
+            case 'subtitle':
+                $component = new ComponentSubTitle();
+                $idType = 'component_subtitle_id';
+                break;
+            case 'text':
+                $component = new ComponentText();
+                $idType = 'component_text_id';
                 break;
             default:
                 exit();
@@ -249,13 +276,7 @@ class ManageController extends Controller
         $id = $params['id'];
         $type = $params['type'];
 
-        switch ($type) {
-            case 'title':
-                $component = ComponentTitle::findOne($id);
-                break;
-            default:
-                exit();
-        }
+        $component = $this->getComponentByType($type, $id);
 
         $component->delete();
     }
@@ -273,13 +294,7 @@ class ManageController extends Controller
         $type = $params['type'];
         $pos = $params['position'];
 
-        switch ($type) {
-            case 'title':
-                $component = ComponentTitle::findOne($id);
-                break;
-            default:
-                exit();
-        }
+        $component = $this->getComponentByType($type, $id);
 
         $component->position = $pos;
         $component->save();
