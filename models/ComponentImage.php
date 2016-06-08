@@ -4,6 +4,6 @@ namespace app\models;
 
 use yii\db\ActiveRecord;
 
-class PageUrl extends ActiveRecord {
-    
+class ComponentImage extends ActiveRecord {
+
 }

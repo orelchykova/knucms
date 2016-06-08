@@ -229,7 +229,6 @@ manageControllers.controller('constructorCtrl',
                     });
                 };
                 openPrompt('Вы уверены что хотите удалить пункт меню?', delItem);
-            }
-
+            };
 
 }]);

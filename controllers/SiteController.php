@@ -143,4 +143,9 @@ class SiteController extends Controller
     }
 
 
+
+    public function actionNew()
+    {
+        return $this->render('new');
+    }
 }

@@ -8,14 +8,63 @@
 .editable-container
   position: relative
   display: inline-block
+  img
+    margin: 16px 0
 .edit-icons
   position: absolute
-  right: -50px
-  top: -3px
-.edit-icon, .done-icon
+  left: calc(100% + 16px)
+  top: 50%
+  margin-top: -12px
   display: inline-block
-  cursor: pointer
+  width: 90px
+  line-height: 0.6
+  white-space: nowrap
+  text-align: left
+  &.edit-icons-image
+    top: 30px
+    right: 0
+    left: calc(100% - 50px)
+    white-space: normal
+    i
+      background: rgba(255, 255, 255, 0.7)
+    .edit-icon
+      margin-left: 24px
+  i
+    display: inline-block
+    cursor: pointer
+    vertical-align: middle
+a,
+a:hover
+  .edit-icons
+    i
+      color: #333
+
+.href-wrap
+  position: relative
+  display: inline-block
   vertical-align: middle
+  color: #333
+  &:hover
+    color: #333
+  &:before
+    content: 'link'
+    font-family: 'Material Icons'
+    position: absolute
+    left: 22px
+    top: 8px
+    font-size: 16px
+  .href-input
+    display: inline-block
+    vertical-align: middle
+    margin-left: 16px
+    padding: 4px 8px 4px 28px
+    border: 1px solid #CBCBCB
+    &:focus
+      outline: none
+      box-shadow: 0px 0 3px 2px #2196F3
+
+.ta-hidden-input
+  display: none
 
 .to-edit[contenteditable="true"]
   outline: none

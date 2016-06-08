@@ -25,6 +25,11 @@
                      data-type="subtitle"></div>
                 <div class="component-item"
                      component-item
+                     icon="link"
+                     text="Ссылка"
+                     data-type="link"></div>
+                <div class="component-item"
+                     component-item
                      icon="reorder"
                      text="Текст"
                      data-type="text"></div>
@@ -34,13 +39,15 @@
 
             <div class="component-item component-category"
                  component-category
-                 icon="text_fields"
-                 text="Текст2"></div>
+                 icon="photo_library"
+                 text="Изображения"></div>
             <div class="component-subitems">
+                <i class="material-icons up-category" up-category>keyboard_backspace</i>
                 <div class="component-item"
                      component-item
-                     icon="text_fields"
-                     text="Текст2"></div>
+                     icon="photo"
+                     text="Картинка"
+                     data-type="image"></div>
             </div>
         </div>
 

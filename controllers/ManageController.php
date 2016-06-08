@@ -2,6 +2,8 @@
 
 namespace app\controllers;
 
+use app\models\ComponentImage;
+use app\models\ComponentLink;
 use app\models\ComponentSubTitle;
 use app\models\ComponentTitle;
 use app\models\ComponentText;
@@ -193,6 +195,12 @@ class ManageController extends Controller
             case 'text':
                 $component = ComponentText::findOne($id);
                 break;
+            case 'link':
+                $component = ComponentLink::findOne($id);
+                break;
+            case 'image':
+                $component = ComponentImage::findOne($id);
+                break;
             default:
                 exit();
         }
@@ -239,19 +247,23 @@ class ManageController extends Controller
         switch ($type) {
             case 'title':
                 $component = new ComponentTitle();
-                $idType = 'component_title_id';
                 break;
             case 'subtitle':
                 $component = new ComponentSubTitle();
-                $idType = 'component_subtitle_id';
                 break;
             case 'text':
                 $component = new ComponentText();
-                $idType = 'component_text_id';
+                break;
+            case 'link':
+                $component = new ComponentLink();
+                break;
+            case 'image':
+                $component = new ComponentImage();
                 break;
             default:
                 exit();
         }
+        $idType = 'component_' . $type . '_id';
 
         foreach ($params as $paramName=>$paramVal) {
             $component->$paramName = $paramVal;
@@ -298,6 +310,20 @@ class ManageController extends Controller
 
         $component->position = $pos;
         $component->save();
+    }
+
+    public function actionUploadImage()
+    {
+        if (empty( $_FILES )) {
+            exit();
+        }
+
+        $tempPath = $_FILES[ 'file' ][ 'tmp_name' ];
+        $uploadPath = dirname( __FILE__ ) . DIRECTORY_SEPARATOR . '../web/uploads' . DIRECTORY_SEPARATOR . $_FILES[ 'file' ][ 'name' ];
+        move_uploaded_file($tempPath, $uploadPath);
+
+        $filePath = '/uploads/' . $_FILES[ 'file' ][ 'name' ];
+        echo json_encode($filePath);
     }
 
     public function actionLogout()

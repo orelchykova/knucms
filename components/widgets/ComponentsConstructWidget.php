@@ -49,6 +49,12 @@ class ComponentsConstructWidget extends Widget
                 case (isset($component->component_text_id)):
                     $this->renderText($component);
                     break;
+                case (isset($component->component_link_id)):
+                    $this->renderLink($component);
+                    break;
+                case (isset($component->component_image_id)):
+                    $this->renderImage($component);
+                    break;
             }
         }
     }
@@ -86,6 +92,39 @@ class ComponentsConstructWidget extends Widget
         echo $html;
     }
 
+    protected function renderLink($link)
+    {
+        $html = Html::tag('a', $link->content, [
+            'href' => $link->href,
+            'data-component-type' => 'link',
+            'id' => 'link_' . $link->component_link_id,
+            'editable-text' => ''
+        ]);
+
+        echo $html;
+    }
+
+    protected function renderImage($img)
+    {
+        if (empty($img->src)) {
+            $img->delete();
+            exit();
+        }
+        $imageHtml = Html::tag('img', '', [
+            'src' => $img->src,
+            'width' => $img->width,
+        ]);
+
+        echo Html::tag('div', $imageHtml, [
+            'id' => 'image_' . $img->component_image_id,
+            'editable-image' => '',
+            'image' => $img->src,
+            'class' => $img->classes,
+            'data-width' => $img->width,
+            'data-component-type' => 'image',
+        ]);
+    }
+
     protected function renderSeparartor()
     {
         echo Html::tag('div', '', [
@@ -95,4 +134,5 @@ class ComponentsConstructWidget extends Widget
         ]);
         $this->separatorNum++;
     }
+
 }

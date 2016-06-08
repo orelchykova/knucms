@@ -3,7 +3,8 @@ var manageApp = angular.module('manageApp', [
     'manageControllers',
     'manageDirectives',
     'ngRoute',
-    'textAngular'
+    'textAngular',
+    'angularFileUpload'
 ]);
 
 manageApp.config(['$routeProvider',

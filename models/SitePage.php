@@ -26,13 +26,25 @@ class SitePage extends ActiveRecord {
         return $this->hasMany(ComponentText::className(), ['site_page_id' => 'site_page_id']);
     }
 
+    public function getLinkComponents()
+    {
+        return $this->hasMany(ComponentLink::className(), ['site_page_id' => 'site_page_id']);
+    }
+
+    public function getImageComponents()
+    {
+        return $this->hasMany(ComponentImage::className(), ['site_page_id' => 'site_page_id']);
+    }
+
     public function getAllComponents()
     {
         $titles = $this->getTitleComponents()->all();
         $subTitles = $this->getSubTitleComponents()->all();
         $texts = $this->getTextComponents()->all();
+        $links = $this->getLinkComponents()->all();
+        $images = $this->getImageComponents()->all();
 
-        $allComponents = array_merge($titles, $subTitles, $texts);
+        $allComponents = array_merge($titles, $subTitles, $texts, $links, $images);
         return $allComponents;
     }
 
