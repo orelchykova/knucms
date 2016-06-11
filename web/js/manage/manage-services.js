@@ -108,3 +108,22 @@ manageServices.factory('Components', [
         }
     }
 ]);
+
+manageServices.factory('SiteElements', [
+    '$resource',
+    function($resource) {
+        return {
+            update: $resource(
+                'manage/update-site-element',
+                {
+                    query: {
+                        method: 'GET',
+                        params: {
+                            'type': '@type',
+                            'content': '@content'
+                        }
+                    }
+                })
+        }
+    }
+]);

@@ -7,6 +7,7 @@ use app\models\ComponentLink;
 use app\models\ComponentSubTitle;
 use app\models\ComponentTitle;
 use app\models\ComponentText;
+use app\models\SiteElements;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -324,6 +325,20 @@ class ManageController extends Controller
 
         $filePath = '/uploads/' . $_FILES[ 'file' ][ 'name' ];
         echo json_encode($filePath);
+    }
+
+    public function actionUpdateSiteElement()
+    {
+        $params = $_GET;
+
+        if (!isset($params['type']) && !isset($params['content']))
+        {
+            exit();
+        }
+
+        $elem = SiteElements::find()->where(['type' => $params['type']])->one();
+        $elem->content = $params['content'];
+        $elem->save();
     }
 
     public function actionLogout()

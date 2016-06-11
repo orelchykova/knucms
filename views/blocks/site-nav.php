@@ -9,7 +9,7 @@ use app\models\MenuItem;
         <div class="navbar-header"><button type="button" class="navbar-toggle"><span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
-                <span class="icon-bar"></span></button><a class="navbar-brand" href="/">My Company</a>
+                <span class="icon-bar"></span></button><a class="navbar-brand" logo><?=Yii::$app->controller->logo->content?></a>
         </div>
         <div class="collapse navbar-collapse">
             <?=Menu::widget([

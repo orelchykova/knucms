@@ -51,10 +51,7 @@ class SiteController extends Controller
 
 
 
-    public function actionIndex()
-    {
-        return $this->render('index');
-    }
+
 
     public function actionManage()
     {
@@ -87,16 +84,10 @@ class SiteController extends Controller
         ]);
     }
 
-    public function actionWw()
-    {
-        return $this->render('ww');
-    }
 
 
-    public function actionPunkt()
-    {
-        return $this->render('punkt');
-    }
+
+
 
     public function actionPod()
     {
@@ -108,10 +99,7 @@ class SiteController extends Controller
         return $this->render('e');
     }
 
-    public function actionTy()
-    {
-        return $this->render('ty');
-    }
+
 
 
 
@@ -148,4 +136,6 @@ class SiteController extends Controller
     {
         return $this->render('new');
     }
+
+
 }

@@ -316,7 +316,12 @@ manageDirectives.directive('editableText', [
                 };
 
                 scope.changeWidth = function(dwidth) {
-                    scope.imgWidthStyle += dwidth;
+                    if ((scope.imgWidthStyle <= 250 && dwidth < 0) ||
+                        (scope.imgWidthStyle >= 1200 && dwidth > 0)){
+                        return;
+                    }
+
+                        scope.imgWidthStyle += dwidth;
                 };
 
                 scope.edit = function() {
@@ -524,7 +529,7 @@ manageDirectives.directive('editableText', [
                     };
 
                     createImage = function(id) {
-                        return '<div editable-image data-component-type="image" id="image_' + id + '" ></div>';
+                        return '<div editable-image data-component-type="image" class="" id="image_' + id + '" ></div>';
                     };
 
                     separator = $(event.target);
@@ -664,4 +669,77 @@ manageDirectives.directive('editableText', [
                 }
             }
         };
-    }]);
+    }])
+
+.directive('logo', [
+        'SiteElements',
+        '$compile',
+        function (SiteElements, $compile) {
+            return {
+                restrict: 'A',
+                transclude: true,
+                scope: true,
+                template: '<div class="editable-wrapper">' +
+                '<div class="editable-container">' +
+                '<span class="to-edit" ng-transclude ng-keydown="change()"></span>' +
+                '<div class="edit-icons white-icons">' +
+                '<i class="material-icons edit-icon" ng-click="edit()" ng-if="!compEditing">edit</i>' +
+                '<i class="material-icons done-icon" ng-click="done()" ng-if="compEditing">done</i>' +
+                '</div>' +
+                '</div>' +
+                '</div>',
+                link: function (scope, element, attrs) {
+                    var href,
+                        linkInput;
+
+                    scope.compEditing = false;
+
+                    /* for link component*/
+                    if (attrs.componentType === 'link') {
+                        href = element.attr('href');
+                        element.removeAttr('href');
+                        linkInput = '<div class="href-wrap" ng-show="compEditing">' +
+                            '<input ng-keydown="change()" class="href-input" type="text" value="' + href + '"></div>';
+                        element.find('.edit-icons').append($compile(linkInput)(scope));
+                    }
+
+                    scope.change = function() {
+                        element.find('.to-edit').addClass('edited');
+                    };
+
+                    scope.edit = function() {
+                        var toEditElem = element.find('.to-edit');
+
+                        toEditElem.attr('contenteditable', 'true');
+                        toEditElem.focus();
+
+                        scope.compEditing = true;
+                        element.find('.href-input').val(href);
+                    };
+
+                    scope.done = function() {
+                        var toEditElem = element.find('.to-edit'),
+                            content,
+                            type,
+                            id,
+                            updateParams;
+
+                        if (element.find('.to-edit').hasClass('edited')) {
+                            type = 'logo';
+                            content = element
+                                .find('.to-edit')
+                                .children()
+                                .html();
+                            content = content ? content : element.find('.to-edit').html();
+                            content = formatText(content);
+                            SiteElements.update.query({
+                                type: type,
+                                content: content
+                            });
+                        }
+                        toEditElem.attr('contenteditable', 'false');
+                        scope.compEditing  = false;
+                    }
+                }
+            };
+        }]);

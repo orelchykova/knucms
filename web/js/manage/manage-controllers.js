@@ -13,7 +13,7 @@ manageControllers.controller('constructorCtrl',
             var menuItems;
             var closeItem = '<i class="material-icons delete-icon">clear</i>';
             var addItem = '<i class="material-icons add-sub-item">add</i>';
-            $rootScope.constructPage = '/site/index';
+            $rootScope.constructPage = '/';
             $scope.editing = false;
 
 

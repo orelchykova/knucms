@@ -105,6 +105,9 @@
   white-space: nowrap;
   text-align: left;
 }
+.edit-icons.white-icons i {
+  color: #fff;
+}
 .edit-icons.edit-icons-image {
   top: 30px;
   right: 0;
@@ -123,6 +126,10 @@
   vertical-align: middle;
 }
 
+a .edit-icons.white-icons i,
+a:hover .edit-icons.white-icons i {
+  color: #fff;
+}
 a .edit-icons i,
 a:hover .edit-icons i {
   color: #333;
@@ -191,6 +198,10 @@ a:hover .edit-icons i {
 }
 .editor-wrapper [contenteditable="true"] {
   outline: none;
+}
+
+.editable-container img {
+  max-width: 100%;
 }
 
 .components-menu {

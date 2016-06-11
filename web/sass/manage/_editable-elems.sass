@@ -20,6 +20,9 @@
   line-height: 0.6
   white-space: nowrap
   text-align: left
+  &.white-icons
+    i
+      color: #fff
   &.edit-icons-image
     top: 30px
     right: 0
@@ -36,6 +39,9 @@
 a,
 a:hover
   .edit-icons
+    &.white-icons
+      i
+        color: #fff
     i
       color: #333
 
@@ -93,3 +99,7 @@ a:hover
       height: initial
   [contenteditable="true"]
     outline: none
+
+.editable-container
+  img
+    max-width: 100%
