@@ -71,24 +71,6 @@ class SiteController extends Controller
         ]);
     }
 
-    public function actionContact()
-    {
-        $model = new ContactForm();
-        if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
-            Yii::$app->session->setFlash('contactFormSubmitted');
-
-            return $this->refresh();
-        }
-        return $this->render('contact', [
-            'model' => $model,
-        ]);
-    }
-
-
-
-
-
-
     public function actionPod()
     {
         return $this->render('pod');
@@ -100,29 +82,10 @@ class SiteController extends Controller
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     public function actionAsx()
     {
         return $this->render('asx');
     }
-
-
-
 
 
     public function actionKoko()
@@ -131,16 +94,21 @@ class SiteController extends Controller
     }
 
 
-
     public function actionNew()
     {
         return $this->render('new');
     }
 
 
-
     public function actionAbTurNtu()
     {
         return $this->render('ab-tur-ntu');
+    }
+
+
+
+    public function actionNovyy()
+    {
+        return $this->render('novyy');
     }
 }

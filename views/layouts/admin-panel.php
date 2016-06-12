@@ -59,7 +59,7 @@ AppAsset::register($this);
         'items' => [
             ['label' => 'Главная', 'url' => '/manage-panel#/'],
             ['label' => 'Конструктор', 'url' => ['manage-panel#/constructor']],
-            ['label' => 'Contact', 'url' => ['/site/contact']],
+            ['label' => 'Помощь', 'url' => ['/manage-panel#/help']],
             Yii::$app->user->isGuest ?
                 ['label' => 'Login', 'url' => ['/site/login']] :
                 [

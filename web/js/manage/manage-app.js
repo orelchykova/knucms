@@ -17,6 +17,9 @@ manageApp.config(['$routeProvider',
                 templateUrl: '/manage/constructor',
                 controller: 'constructorCtrl'
             }).
+            when('/help', {
+                templateUrl: '/manage/help'
+            }).
             otherwise({
                 templateUrl: '/manage/start-page'
             });

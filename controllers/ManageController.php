@@ -61,6 +61,11 @@ class ManageController extends Controller
         return $this->render('/manage/constructor', ['page' => '//site/index']);
     }
 
+    public function actionHelp()
+    {
+        return $this->render('/manage/help');
+    }
+
     public function actionUpdateMenu()
     {
 
