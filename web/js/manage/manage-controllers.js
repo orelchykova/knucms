@@ -16,6 +16,20 @@ manageControllers.controller('constructorCtrl',
             $rootScope.constructPage = '/';
             $scope.editing = false;
 
+            function bindPasteEvent() {
+                $('[contenteditable]').on('paste', function(e) {
+                    var currentTxt;
+
+                    e.stopPropagation();
+                    e.preventDefault();
+                    e = e.originalEvent;
+                    clipboardData = e.clipboardData || window.clipboardData;
+                    pastedData = clipboardData.getData('Text');
+
+                    currentTxt = $(this).html();
+                    $(this).html(currentTxt + ' ' + pastedData);
+                });
+            }
 
             function constructorStart() {
                 /* menu start*/
@@ -99,6 +113,7 @@ manageControllers.controller('constructorCtrl',
                         menuitem.find('.delete-icon').css('display', 'block');
                         menuitem.find('.add-sub-item').css('display', 'block');
                     });
+                    bindPasteEvent();
                 }
                 else {
                     menuItems = angular.element('.main-menu-item');
@@ -214,6 +229,7 @@ manageControllers.controller('constructorCtrl',
                         .append(addItem);
                     menuWrapp.append(menuItem);
                     link[0].focus();
+                    bindPasteEvent();
                 }
             };
 

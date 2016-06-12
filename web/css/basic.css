@@ -72,6 +72,10 @@ html, body {
   height: 100px;
 }
 
+.separator {
+  height: 16px;
+}
+
 .popup {
   position: fixed;
   top: 0;
@@ -86,6 +90,10 @@ html, body {
 }
 .popup button + button {
   margin-left: 16px;
+}
+
+img {
+  max-width: 100%;
 }
 
 .fileUpload {

@@ -39,8 +39,8 @@
 
             <div class="component-item component-category"
                  component-category
-                 icon="photo_library"
-                 text="Изображения"></div>
+                 icon="perm_media"
+                 text="Медиа"></div>
             <div class="component-subitems">
                 <i class="material-icons up-category" up-category>keyboard_backspace</i>
                 <div class="component-item"
@@ -48,6 +48,11 @@
                      icon="photo"
                      text="Картинка"
                      data-type="image"></div>
+                <div class="component-item"
+                     component-item
+                     icon="video_library"
+                     text="Видео"
+                     data-type="video"></div>
             </div>
         </div>
 

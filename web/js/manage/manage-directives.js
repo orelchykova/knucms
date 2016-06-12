@@ -233,6 +233,91 @@ manageDirectives.directive('editableText', [
         };
     }])
 
+.directive('editableVideo', [
+    'Components',
+    '$compile',
+    function (Components, $compile) {
+        return {
+            restrict: 'A',
+            transclude: true,
+            scope: {
+                link: '@'
+            },
+            template: '<div class="editable-wrapper">' +
+            '<div class="editable-container">' +
+            '<div class="to-edit">' +
+            '<iframe width="560" height="315" ng-if="link" ng-src="{{link}}" frameborder="0" allowfullscreen></iframe>' +
+            '<div ng-if="!link" class="video-prev"><i class="material-icons">ondemand_video</i></div>' +
+            '</div>' +
+            '<div class="edit-icons">' +
+            '<i class="material-icons edit-icon" ng-click="edit()" ng-if="!compEditing">edit</i>' +
+            '<i class="material-icons done-icon" ng-click="delete()" ng-if="compEditing">delete</i>' +
+            '<i class="material-icons done-icon" ng-click="done()" ng-if="compEditing">done</i>' +
+            '<div class="href-wrap" ng-show="compEditing">' +
+            '<input ng-keydown="change()" class="href-input" type="text" value="link"></div>' +
+            '</div>' +
+            '</div>' +
+            '</div>',
+            link: function (scope, element, attrs) {
+                var link = scope.link;
+
+                scope.compEditing = false;
+
+                scope.change = function() {
+                    element.find('.to-edit').addClass('edited');
+                };
+
+                scope.edit = function() {
+                    scope.compEditing = true;
+                    element.find('.href-input').val(link);
+                };
+
+                scope.delete = function() {
+                    var delItem = function() {
+                        var type = element.data('componentType'),
+                            id = element.attr('id').split(type + '_')[1],
+                            deleting;
+
+                        deleting = Components.delete.query({
+                            id: id,
+                            type: type
+                        })
+                            .$promise
+                            .then(function(result) {
+                                element.next().remove();
+                                element.remove();
+                                recalcPositions(Components);
+                            });
+                    };
+                    openPrompt('Вы уверены что хотите удалить компонент?', delItem);
+                };
+
+                scope.done = function() {
+                    var toEditElem = element.find('.to-edit'),
+                        content,
+                        type,
+                        id,
+                        updateParams;
+
+                    if (element.find('.to-edit').hasClass('edited')) {
+                        type = element.data('componentType');
+                        id = element.attr('id').split(type + '_')[1];
+                        link = element.find('.href-input').val().replace("watch?v=", "v/");
+                        updateParams = {
+                            id: id,
+                            type: type,
+                            link: link
+
+                        };
+                        scope.link = link;
+                        Components.update.query(updateParams);
+                    }
+                    scope.compEditing  = false;
+                }
+            }
+        };
+    }])
+
 .directive('editableImage', [
     'Components',
     '$compile',
@@ -548,6 +633,10 @@ manageDirectives.directive('editableText', [
                         return '<div editable-image data-component-type="image" class="" id="image_' + id + '" ></div>';
                     };
 
+                    createVideo = function(id) {
+                        return '<div editable-video data-component-type="video" link="" id="video_' + id + '" ></div>';
+                    };
+
                     separator = $(event.target);
 
                     switch (type) {
@@ -578,6 +667,12 @@ manageDirectives.directive('editableText', [
                             break;
                         case 'image':
                             creatingFunc = createImage;
+                            params = {
+
+                            };
+                            break;
+                        case 'video':
+                            creatingFunc = createVideo;
                             params = {
 
                             };
@@ -709,15 +804,6 @@ manageDirectives.directive('editableText', [
                         linkInput;
 
                     scope.compEditing = false;
-
-                    /* for link component*/
-                    if (attrs.componentType === 'link') {
-                        href = element.attr('href');
-                        element.removeAttr('href');
-                        linkInput = '<div class="href-wrap" ng-show="compEditing">' +
-                            '<input ng-keydown="change()" class="href-input" type="text" value="' + href + '"></div>';
-                        element.find('.edit-icons').append($compile(linkInput)(scope));
-                    }
 
                     scope.change = function() {
                         element.find('.to-edit').addClass('edited');

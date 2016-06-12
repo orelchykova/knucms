@@ -55,6 +55,9 @@ class ComponentsConstructWidget extends Widget
                 case (isset($component->component_image_id)):
                     $this->renderImage($component);
                     break;
+                case (isset($component->component_video_id)):
+                    $this->renderVideo($component);
+                    break;
             }
         }
     }
@@ -122,6 +125,29 @@ class ComponentsConstructWidget extends Widget
             'class' => $img->classes,
             'data-width' => $img->width,
             'data-component-type' => 'image',
+        ]);
+    }
+
+    protected function renderVideo($video)
+    {
+        if (empty($video->link)) {
+            $video->delete();
+            exit();
+        }
+
+        $videoHtml = Html::tag('iframe', '', [
+            'width' => '560',
+            'height' => '315',
+            'src' => $video->link,
+            'frameborder' => '0',
+            'allowfullscreen' => ''
+        ]);
+
+        echo Html::tag('div', $videoHtml, [
+            'id' => 'video_' . $video->component_video_id,
+            'editable-video' => '',
+            'data-component-type' => 'video',
+            'link' => $video->link
         ]);
     }
 

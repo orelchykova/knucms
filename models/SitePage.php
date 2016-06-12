@@ -36,6 +36,11 @@ class SitePage extends ActiveRecord {
         return $this->hasMany(ComponentImage::className(), ['site_page_id' => 'site_page_id']);
     }
 
+    public function getVideoComponents()
+    {
+        return $this->hasMany(ComponentVideo::className(), ['site_page_id' => 'site_page_id']);
+    }
+
     public function getAllComponents()
     {
         $titles = $this->getTitleComponents()->all();
@@ -43,8 +48,9 @@ class SitePage extends ActiveRecord {
         $texts = $this->getTextComponents()->all();
         $links = $this->getLinkComponents()->all();
         $images = $this->getImageComponents()->all();
+        $videos = $this->getVideoComponents()->all();
 
-        $allComponents = array_merge($titles, $subTitles, $texts, $links, $images);
+        $allComponents = array_merge($titles, $subTitles, $texts, $links, $images, $videos);
         return $allComponents;
     }
 

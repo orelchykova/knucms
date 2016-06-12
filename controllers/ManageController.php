@@ -7,6 +7,7 @@ use app\models\ComponentLink;
 use app\models\ComponentSubTitle;
 use app\models\ComponentTitle;
 use app\models\ComponentText;
+use app\models\ComponentVideo;
 use app\models\SiteElements;
 use Yii;
 use yii\filters\AccessControl;
@@ -202,6 +203,9 @@ class ManageController extends Controller
             case 'image':
                 $component = ComponentImage::findOne($id);
                 break;
+            case 'video':
+                $component = ComponentVideo::findOne($id);
+                break;
             default:
                 exit();
         }
@@ -260,6 +264,9 @@ class ManageController extends Controller
                 break;
             case 'image':
                 $component = new ComponentImage();
+                break;
+            case 'video':
+                $component = new ComponentVideo();
                 break;
             default:
                 exit();
