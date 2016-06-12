@@ -199,6 +199,9 @@ a:hover .edit-icons i {
 .editor-wrapper [contenteditable="true"] {
   outline: none;
 }
+.editor-wrapper textarea.ta-html {
+  min-height: 135px;
+}
 
 .editable-container img {
   max-width: 100%;

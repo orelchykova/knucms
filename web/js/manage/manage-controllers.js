@@ -61,10 +61,6 @@ manageControllers.controller('constructorCtrl',
                         $(this).parent().addClass('edited-menu-item');
                     }
                 });
-                /*menu end*/
-               // $('.drag-mode-btn').attr('drag-mode', '');
-                //setTimeout(function() {$compile($('.drag-mode-btn'))($scope);}, 1000);
-
 
             }
 

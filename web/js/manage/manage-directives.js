@@ -38,6 +38,20 @@ function setSeparatorStyle(add) {
     });
 }
 
+function bindPasteEvent() {
+    $('[contenteditable]').on('paste', function(e) {
+        var currentTxt;
+
+        e.stopPropagation();
+        e.preventDefault();
+        e = e.originalEvent;
+        clipboardData = e.clipboardData || window.clipboardData;
+        pastedData = clipboardData.getData('Text');
+
+        currentTxt = $(this).html();
+        $(this).html(currentTxt + ' ' + pastedData);
+    });
+}
 
 var manageDirectives = angular.module('manageDirectives', []);
 
@@ -82,6 +96,7 @@ manageDirectives.directive('editableText', [
                     var toEditElem = element.find('.to-edit');
 
                     toEditElem.attr('contenteditable', 'true');
+                    bindPasteEvent();
                     toEditElem.focus();
 
                     scope.compEditing = true;
@@ -151,7 +166,7 @@ manageDirectives.directive('editableText', [
             scope: true,
             template: '<div class="editable-wrapper">' +
                             '<div class="editable-container">' +
-                                '<div class="to-edit" ng-transclude></div>' +
+                                '<div class="to-edit m-top-16" ng-transclude></div>' +
                                 '<div class="edit-icons">' +
                                     '<i class="material-icons edit-icon" ng-click="edit()" ng-if="!compEditing">edit</i>' +
                                     '<i class="material-icons done-icon" ng-click="delete()" ng-if="compEditing ">delete</i>' +
@@ -170,7 +185,6 @@ manageDirectives.directive('editableText', [
                 scope.redactorContent = startContent;
 
                 scope.edit = function() {
-                    //var toEditElem = element.find('.to-edit');
                     scope.compEditing = true;
                 };
 
@@ -230,20 +244,22 @@ manageDirectives.directive('editableText', [
             scope: {
                 image: '@',
                 id: '@',
-                class: '@',
+                class: '@'
             },
             template:
             '<div class="editable-wrapper" ng-class="class">' +
                 '<div class="editable-container">' +
                     '<div ng-if="!image">' +
-                        '<div class="well drop-zone" nv-file-over="" over-class="dragover-img" uploader="uploader">Перетащите изображение </div>' +
-                        '<input type="file" nv-file-select="" uploader="uploader" />' +
-                        '<div ng-repeat="item in uploader.queue">' +
-                            '<p>{{item.file.name}}</p>' +
+                        '<div class="well drop-zone" nv-file-drop="" nv-file-over="" over-class="dragover-img" uploader="uploader">Перетащите изображение </div>' +
+                        '<div class="fileUpload btn btn-primary">' +
+                            '<span>Загрузить</span>' +
+                            '<input type="file" nv-file-select="" uploader="uploader" />' +
+                        '</div>' +
+                        '<div ng-repeat="item in uploader.queue" class="m-top-16">' +
                             '<div ng-show="uploader.isHTML5" ng-thumb="{ file: item._file, width: imgWidth }"></div>' +
                             '<button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">' +
                             '<span class="glyphicon glyphicon-upload"></span> Загрузить  </button>' +
-                            '<button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">'  +
+                            '<button type="button" class="btn btn-danger btn-xs m-left-16" ng-click="item.remove()">'  +
                             '<span class="glyphicon glyphicon-trash"></span> Удалить' +
                             '</button>' +
                         '</div>' +
@@ -710,7 +726,9 @@ manageDirectives.directive('editableText', [
                     scope.edit = function() {
                         var toEditElem = element.find('.to-edit');
 
+
                         toEditElem.attr('contenteditable', 'true');
+                        bindPasteEvent();
                         toEditElem.focus();
 
                         scope.compEditing = true;

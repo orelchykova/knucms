@@ -56,8 +56,16 @@ html, body {
   opacity: 0;
 }
 
+.m-top-16 {
+  margin-top: 16px;
+}
+
 .m-top-36 {
   margin-top: 36px;
+}
+
+.m-left-16 {
+  margin-left: 16px;
 }
 
 .push-bottom {
@@ -65,7 +73,7 @@ html, body {
 }
 
 .popup {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
@@ -78,4 +86,21 @@ html, body {
 }
 .popup button + button {
   margin-left: 16px;
+}
+
+.fileUpload {
+  position: relative;
+  overflow: hidden;
+  margin: 10px;
+}
+.fileUpload input {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0;
+  padding: 0;
+  font-size: 20px;
+  cursor: pointer;
+  opacity: 0;
+  filter: alpha(opacity=0);
 }
